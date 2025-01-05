@@ -89,3 +89,28 @@ function RenderTable(){ //RenderTable fuggveny letrehozasa
 }
 
 RenderTable()//meghivom a RenderTable fuggvenyt
+
+const form = document.getElementById('form')
+
+form.addEventListener('submit', function(e){ //a form submit eseményére teszek egy eseménykezelőt
+    e.preventDefault() //meggatolom az alapveto mukodeset
+    const terHTML = document.getElementById('fizika') //elkerem a html rol a fizikat
+    const idoHTML = document.getElementById('ido') //elkerem a html rol a idot
+    const kepvHTML = document.getElementById('tudos1') //elkerem a html rol a tudos1-et
+    const kepv2HTML = document.getElementById('tudos2') //elkerem a html rol a tudos2-t
+
+    const terV = terHTML.value //a terHTML eretekt kiveszem a terV változóba
+    const idoV = idoHTML.value //a idoHTML eretekt kiveszem a idoV változóba
+    const kepvV = kepvHTML.value //a kepvHTML eretekt kiveszem a kepvV változóba
+    const kepv2V = kepv2HTML.value //a kepv2HTML eretekt kiveszem a kepv2V változóba
+
+    const uj =  { //létrehozok egy uj objektumot
+        ter: terV, //a ter tulajdonsag erteke terV
+        ido: idoV, //a ido tulajdonsag erteke idoV
+        kepv: kepvV, //a kepv tulajdonsag erteke kepvV
+        kepv2: kepv2V, //a kepv2 tulajdonsag erteke kepv2V
+    }
+    tomb.push(uj) //a tombbe berakom az uj objektumot
+    table.innerHTML = "" //a table-t clearelem
+    RenderTable() //meghivom a RenderTable függvényt
+})
