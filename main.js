@@ -101,6 +101,34 @@ function validate(validelem, errorszovege){ //letrehozzuk a validate fuggvenyt
     return valid //a valid ertekve terunk vissza
 }
 
+
+function validate2(validelem1, validelem2, errorszovege){
+    let valid = true //a valid alapertek true
+    if(validelem1.value === "" && validelem2.value === ""){ // ha a validelem1 és a validelem2 is üres akkkor megyunk be
+        const parent = validelem1.parentElement //a validelem1 paarentjét kivesszuk egy valtozoba
+        const error = parent.querySelector('.error') //a parent erro classos spanjét kivesszuk egy valtozoba
+        error.innerHTML = errorszovege //az error szovege errorszovege paraméter
+
+        const parent2 = validelem2.parentElement //a validelem2 parentjét kivesszuk egy valtozoba
+        const error2 = parent2.querySelector('.error') //a parent2 error classos spanjét kivesszuk egy valtozoba
+        error2.innerHTML = errorszovege //az error2 szovege errorszovege paraméter
+        valid = false //a validot falserea allitjuk
+    }
+
+    if(validelem2.value === "" && validelem1.value != ""){ //ha csak a validelem2 üres akkor megyunk be
+        const parent = validelem2.parentElement //a validelem2 parentjét kivesszük egy valtozoba
+        const error = parent.querySelector('.error') //a pernthez tertozo class errort kivesszuk egy valtozoba
+        error.innerHTML = "" //az error szovege semmi 
+    }
+
+    if(validelem1.value === "" && validelem2.value != ""){ //ha csak a validelem1 üres akkor megyunk be
+        const parent = validelem1.parentElement //a validelem1 parentjét kivesszük egy valtozoba
+        const error = parent.querySelector('.error') //a pernthez tertozo class errort kivesszuk egy valtozoba
+        error.innerHTML = "" //az error szovege semmi 
+    }
+    return valid //a valid ertekevel treunk vissza
+}
+
 RenderTable()//meghivom a RenderTable fuggvenyt
 
 const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
@@ -134,28 +162,8 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
         valid = false //a valid erteket falsera allitjuk
     }
 
-    if(kepvV === "" && kepv2V === ""){ // ha a kepvV és a kepv2V is üres akkkor megyunk be
-        const parent = kepvHTML.parentElement //a kepvHTML paarentjét kivesszuk egy valtozoba
-        const error = parent.querySelector('.error') //a parent erro classos spanjét kivesszuk egy valtozoba
-        error.innerHTML = errorszkepv //az error szovege errorszkepv
-
-        const parent2 = kepv2HTML.parentElement //a kepv2HTML parentjét kivesszuk egy valtozoba
-        const error2 = parent2.querySelector('.error') //a parent2 error classos spanjét kivesszuk egy valtozoba
-        error2.innerHTML = errorszkepv //az error2 szovege errorszkepv
-        valid = false // a validot falsera allitjuk
-    }
-
-    if(kepv2V === "" && kepvV != ""){ //ha csak a kepv2V üres akkor megyunk be
-        const parent = kepv2HTML.parentElement //a kepv2HTML parentjét kivesszük egy valtozoba
-        const error = parent.querySelector('.error') //a pernthez tertozo class errort kivesszuk egy valtozoba
-        error.innerHTML = "" //az error szovege semmi 
-    }
-
-    if(kepvV === "" && kepv2V != ""){ //ha csak a kepvV üres akkor megyunk be
-        const parent = kepvHTML.parentElement //a kepvHTML parentjét kivesszük egy valtozoba
-        const error = parent.querySelector('.error') //a pernthez tertozo class errort kivesszuk egy valtozoba
-        error.innerHTML = "" //az error szovege semmi 
-    }
+    if(!validate2(kepvHTML, kepv2HTML, errorszkepv)) //ha a validate2 falseal tér vissza akkor megyunk be
+        valid = false //a valid erteket falsera allitjuk
 
     if(valid){ //ha a vaid true akkor megyunk be
         if(kepvV == ""){  //ha a kepvV ures akkor megyunk be 
