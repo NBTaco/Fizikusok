@@ -90,7 +90,7 @@ function RenderTable(){ //RenderTable fuggveny letrehozasa
 
 RenderTable()//meghivom a RenderTable fuggvenyt
 
-const form = document.getElementById('form')
+const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
 
 form.addEventListener('submit', function(e){ //a form submit eseményére teszek egy eseménykezelőt
     e.preventDefault() //meggatolom az alapveto mukodeset
@@ -104,13 +104,41 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
     const kepvV = kepvHTML.value //a kepvHTML eretekt kiveszem a kepvV változóba
     const kepv2V = kepv2HTML.value //a kepv2HTML eretekt kiveszem a kepv2V változóba
 
-    const uj =  { //létrehozok egy uj objektumot
-        ter: terV, //a ter tulajdonsag erteke terV
-        ido: idoV, //a ido tulajdonsag erteke idoV
-        kepv: kepvV, //a kepv tulajdonsag erteke kepvV
-        kepv2: kepv2V, //a kepv2 tulajdonsag erteke kepv2V
+    const errorsz = "A mező kitöltése kötelező!" //az error szöveget berakjuk egy valtozoba
+    const aktual = e.currentTarget //az aktual valtozo a az aktualis elem
+    const errorok = aktual.querySelectorAll('.error') //az errorokat kivesszuk egy valtozoba
+    let valid = true //a valid alap értéke true
+
+    for(const i of errorok)     //Az összes error
+        i.innerHTML = ""        //helyet uresre allitjuk
+
+    if(terV === ""){ //ha a terV ures akkor megyunk be
+        const parent = terHTML.parentElement //a parentet kivesszuk egy valtozoba
+        const error =  parent.querySelector('.error') //a parnethez tartozo error cclasst kivesszuk egy valtozoba
+        if(error != ""){ //ha az error nem ures akkor megyunk be
+            error.innerHTML = errorsz //az error szovege az errosz
+        }
+        valid = false //a valid erteket falsera allitjuk
     }
-    tomb.push(uj) //a tombbe berakom az uj objektumot
+
+    if(idoV === ""){ //ha az idoV ures akkor megyunk be
+        const parent = idoHTML.parentElement //a parentet kivesszuk egy valtozoba
+        const error =  parent.querySelector('.error') //a parnethez tartozo error cclasst kivesszuk egy valtozoba
+        if(error != ""){ //ha az error nem ures akkor megyunk be
+            error.innerHTML = errorsz //az error szovege az errosz
+        }
+        valid = false //a valid erteket falsera allitjuk
+    }
+
+    if(valid){ //ha a vlaid true akkor megyunk be
+        const uj =  { //létrehozok egy uj objektumot
+            ter: terV, //a ter tulajdonsag erteke terV
+            ido: idoV, //a ido tulajdonsag erteke idoV
+            kepv: kepvV, //a kepv tulajdonsag erteke kepvV
+            kepv2: kepv2V, //a kepv2 tulajdonsag erteke kepv2V
+        }
+        tomb.push(uj) //a tombbe berakom az uj objektumot
+    }
     table.innerHTML = "" //a table-t clearelem
     RenderTable() //meghivom a RenderTable függvényt
 })

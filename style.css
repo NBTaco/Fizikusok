@@ -25,3 +25,9 @@ tbody tr:nth-child(odd) {
 table th, table td {
     text-align: center;
 }
+
+.error{
+    color: red;
+    font-style: italic;
+}
+
