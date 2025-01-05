@@ -142,6 +142,7 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
         const parent2 = kepv2HTML.parentElement //a kepv2HTML parentjét kivesszuk egy valtozoba
         const error2 = parent2.querySelector('.error') //a parent2 error classos spanjét kivesszuk egy valtozoba
         error2.innerHTML = errorszkepv //az error2 szovege errorszkepv
+        valid = false // a validot falsera allitjuk
     }
 
     if(kepv2V === "" && kepvV != ""){ //ha csak a kepv2V üres akkor megyunk be
@@ -156,7 +157,7 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
         error.innerHTML = "" //az error szovege semmi 
     }
 
-    if(valid){ //ha a valid true akkor megyunk be
+    if(valid){ //ha a vaid true akkor megyunk be
         if(kepvV == ""){  //ha a kepvV ures akkor megyunk be 
             const uj =  { //létrehozok egy uj objektumot
                 ter: terV, //a ter tulajdonsag erteke terV
