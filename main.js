@@ -88,6 +88,19 @@ function RenderTable(){ //RenderTable fuggveny letrehozasa
     }
 }
 
+function validate(validelem, errorszovege){ //letrehozzuk a validate fuggvenyt
+    let valid = true //a valid alapertek true
+    if(validelem.value === ""){ //ha a validelem ures akkor megyunk be
+        const parent = validelem.parentElement //a parentet kivesszuk egy valotozba
+        const error = parent.querySelector('.error') //a parenthez tartozo class erroros spant kivesszuk egy valotozoba
+        if(error != ""){ //ha az error nem ures akkor megyunk be
+            error.innerHTML = errorszovege //az error szovege az errorszoveg paraméter
+        }
+        valid = false //a validot falserea allitjuk
+    }
+    return valid //a valid ertekve terunk vissza
+}
+
 RenderTable()//meghivom a RenderTable fuggvenyt
 
 const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
@@ -112,21 +125,11 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
     for(const i of errorok)     //Az összes error
         i.innerHTML = ""        //helyet uresre allitjuk
 
-    if(terV === ""){ //ha a terV ures akkor megyunk be
-        const parent = terHTML.parentElement //a parentet kivesszuk egy valtozoba
-        const error =  parent.querySelector('.error') //a parnethez tartozo error cclasst kivesszuk egy valtozoba
-        if(error != ""){ //ha az error nem ures akkor megyunk be
-            error.innerHTML = errorsz //az error szovege az errosz
-        }
+    if(!validate(terHTML, errorsz)){ //ha a validate falseal ter vissza akkor megyunk be
         valid = false //a valid erteket falsera allitjuk
     }
 
-    if(idoV === ""){ //ha az idoV ures akkor megyunk be
-        const parent = idoHTML.parentElement //a parentet kivesszuk egy valtozoba
-        const error =  parent.querySelector('.error') //a parnethez tartozo error cclasst kivesszuk egy valtozoba
-        if(error != ""){ //ha az error nem ures akkor megyunk be
-            error.innerHTML = errorsz //az error szovege az errosz
-        }
+    if(!validate(idoHTML, errorsz)){ //ha a validate falseal ter vissza akkor megyunk be
         valid = false //a valid erteket falsera allitjuk
     }
 
