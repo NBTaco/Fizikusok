@@ -118,6 +118,7 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
     const kepv2V = kepv2HTML.value //a kepv2HTML eretekt kiveszem a kepv2V változóba
 
     const errorsz = "A mező kitöltése kötelező!" //az error szöveget berakjuk egy valtozoba
+    const errorszkepv = "Legalább egy tudóst meg kell adni!" //az error szöveget a kepviselokhoz berakjuk egy valtozoba
     const aktual = e.currentTarget //az aktual valtozo a az aktualis elem
     const errorok = aktual.querySelectorAll('.error') //az errorokat kivesszuk egy valtozoba
     let valid = true //a valid alap értéke true
@@ -133,14 +134,46 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
         valid = false //a valid erteket falsera allitjuk
     }
 
-    if(valid){ //ha a vlaid true akkor megyunk be
+    if(kepvV === "" && kepv2V === ""){ // ha a kepvV és a kepv2V is üres akkkor megyunk be
+        const parent = kepvHTML.parentElement //a kepvHTML paarentjét kivesszuk egy valtozoba
+        const error = parent.querySelector('.error') //a parent erro classos spanjét kivesszuk egy valtozoba
+        error.innerHTML = errorszkepv //az error szovege errorszkepv
+
+        const parent2 = kepv2HTML.parentElement //a kepv2HTML parentjét kivesszuk egy valtozoba
+        const error2 = parent2.querySelector('.error') //a parent2 error classos spanjét kivesszuk egy valtozoba
+        error2.innerHTML = errorszkepv //az error2 szovege errorszkepv
+    }
+
+    if(kepv2V === "" && kepvV != ""){ //ha csak a kepv2V üres akkor megyunk be
+        const parent = kepv2HTML.parentElement //a kepv2HTML parentjét kivesszük egy valtozoba
+        const error = parent.querySelector('.error') //a pernthez tertozo class errort kivesszuk egy valtozoba
+        error.innerHTML = "" //az error szovege semmi 
+    }
+
+    if(kepvV === "" && kepv2V != ""){ //ha csak a kepvV üres akkor megyunk be
+        const parent = kepvHTML.parentElement //a kepvHTML parentjét kivesszük egy valtozoba
+        const error = parent.querySelector('.error') //a pernthez tertozo class errort kivesszuk egy valtozoba
+        error.innerHTML = "" //az error szovege semmi 
+    }
+
+    if(valid){ //ha a valid true akkor megyunk be
+        if(kepvV == ""){  //ha a kepvV ures akkor megyunk be 
+            const uj =  { //létrehozok egy uj objektumot
+                ter: terV, //a ter tulajdonsag erteke terV
+                ido: idoV, //a ido tulajdonsag erteke idoV
+                kepv: kepv2V, //a kepv tulajdonsag erteke kepv2V
+            }
+            tomb.push(uj) //a tombbe berakom az uj objektumot
+        }
+        else{ 
         const uj =  { //létrehozok egy uj objektumot
-            ter: terV, //a ter tulajdonsag erteke terV
-            ido: idoV, //a ido tulajdonsag erteke idoV
-            kepv: kepvV, //a kepv tulajdonsag erteke kepvV
-            kepv2: kepv2V, //a kepv2 tulajdonsag erteke kepv2V
+                ter: terV, //a ter tulajdonsag erteke terV
+                ido: idoV, //a ido tulajdonsag erteke idoV
+                kepv: kepvV, //a kepv tulajdonsag erteke kepvV
+                kepv2: kepv2V, //a kepv2 tulajdonsag erteke kepv2V
         }
         tomb.push(uj) //a tombbe berakom az uj objektumot
+    }
     }
     table.innerHTML = "" //a table-t clearelem
     RenderTable() //meghivom a RenderTable függvényt
