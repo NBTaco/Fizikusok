@@ -72,11 +72,19 @@ for(let i = 0; i < tomb.length; i++){ //végigmegyunk a tombon egy i vel
     td2.innerHTML = tomb[i].ido //az masodik td szovege a tomb i. objektumanak ido tulajdonsága
     tr.appendChild(td2) // hozzácsatoljuk a cellát a sorhoz
 
-    const td3 = document.createElement('td') //lletrehozzuk a harmadik cellat a sorban
-    td3.innerHTML = tomb[i].kepv //a harmadik td szovege a tomb i. objektumanak kepv tulajdonsága
-    tr.appendChild(td3) // hozzácsatoljuk a cellát a sorhoz
+    if(tomb[i].kepv2){ //ha van kepv2 akkor megyunk be
+        const td3 = document.createElement('td') //lletrehozzuk a harmadik cellat a sorban
+        td3.innerHTML = tomb[i].kepv //a harmadik td szovege a tomb i. objektumanak kepv tulajdonsága
+        tr.appendChild(td3) // hozzácsatoljuk a cellát a sorhoz
 
-    const td4 = document.createElement('td') //lletrehozzuk a negyedik cellat a sorban
-    td4.innerHTML = tomb[i].kepv2 //a ngyedik td szovege a tomb i. objektumanak kepv2 tulajdonsága
-    tr.appendChild(td4) // hozzácsatoljuk a cellát a sorhoz
+        const td4 = document.createElement('td') //lletrehozzuk a negyedik cellat a sorban
+        td4.innerHTML = tomb[i].kepv2 //a ngyedik td szovege a tomb i. objektumanak kepv2 tulajdonsága
+        tr.appendChild(td4) // hozzácsatoljuk a cellát a sorhoz
+    }
+    else{
+        const td3 = document.createElement('td') //lletrehozzuk a harmadik cellat a sorban
+        td3.colSpan = 2 //beallitjuk a colspant a cellára
+        td3.innerHTML = tomb[i].kepv //a harmadik td szovege a tomb i. objektumanak kepv tulajdonsága
+        tr.appendChild(td3) // hozzácsatoljuk a cellát a sorhoz
+    }
 }
