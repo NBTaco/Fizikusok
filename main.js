@@ -36,25 +36,8 @@ const table = document.createElement('table') // table letrehozasa
 document.body.appendChild(table) //a table hozzaadasa a bodyhoz
 
 function RenderTable(){ //RenderTable fuggveny letrehozasa
-    const thead = document.createElement('thead') // table letrehozasa
-    table.appendChild(thead) //a thead hozzaadasa a tablehez
-    
-    const theadr = document.createElement('tr') //tr letrehozasa
-    thead.appendChild(theadr) //a tr hozzaadasa a thead hez
-    
-    const thc1 = document.createElement('th') //laz elso th letrehozasa
-    thc1.innerHTML = fejlec.ter //az elso th szovege a fejlec ter tulajdonsága
-    theadr.appendChild(thc1) //a th-t hozzaadjuk a trhez
-     
-    const thc2 = document.createElement('th') //a haramdik th letrehozasa
-    thc2.innerHTML = fejlec.ido //a masodik th szovege fejlec ido tulajdonsága
-    theadr.appendChild(thc2) //a th-t hozzaadjuk a trhez
-    
-    const thc3 = document.createElement('th') //a masodik th letrehozasa 
-    thc3.colSpan = 2 //beallitjuk a colspant a cellara
-    thc3.innerHTML = fejlec.kepv //a hatmadik th szovege dejlec kepv tulajdonsága
-    theadr.appendChild(thc3) //a th-t hozzaadjuk a trhez
-    
+    fejlecGen()
+
     const tbody = document.createElement('tbody') //tbody letrehozasa
     table.appendChild(tbody) //a tbdoyt hozzaadjuk a table-hez
 
@@ -129,6 +112,39 @@ function validate2(validelem1, validelem2, errorszovege){
     return valid //a valid ertekevel treunk vissza
 }
 
+function fejlecGen(){ //letrehozom a fejlecgeneralas fuggvenyet
+    const fejlec = { //a fejlec objektuma
+        ter: "Fizika területe",  //az objektum ter tulajdonsága
+        ido: "Időszak" ,  //az objektum ido tulajdonsága
+        kepv: "Képviselők"  //az objektum kepv tulajdonsága
+    }
+    const thead = document.createElement('thead') // table letrehozasa
+    table.appendChild(thead) //a thead hozzaadasa a tablehez
+
+    const theadr = document.createElement('tr') //tr letrehozasa
+    thead.appendChild(theadr) //a tr hozzaadasa a thead hez
+    
+    let index = 0 // letrehozok egy index valtozot, ami ha lefut a ciklus novekszik egyell
+
+    //a colspan miatt bevezetek egy index valtozot, ami novekszik amikor a ciklus veget er, 
+    // amikor ez 2-vel egyenlo azaz a 3. tulajdonság jkövetkezik, és a colspanes, 3. 
+    // cellát generálja akkor egy elágazás miatt colspannel hozza létre
+
+    for(const i in fejlec){ //vegigmegyunk a fejelc objektumon
+        if(index === 2){ //ha az index a 2, azaz a 3. objektumnál jár az i akkor megyunk be
+            const th3 = document.createElement('th') //az elso th letrehozasa
+            th3.colSpan = 2 //beallitjuk a colspant a cellara
+            th3.innerHTML = fejlec[i] //az elso th szovege a fejlec i. tulajdonsága
+            theadr.appendChild(th3) //a th-t hozzaadjuk a trhez
+        }
+        else{
+            const th = document.createElement('th') //laz elso th letrehozasa
+            th.innerHTML = fejlec[i] //az elso th szovege a fejlec i. tulajdonsága
+            theadr.appendChild(th) //a th-t hozzaadjuk a trhez
+        }
+        index++ //az indexet novelem 1-el
+    }
+}
 RenderTable()//meghivom a RenderTable fuggvenyt
 
 const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
