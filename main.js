@@ -35,38 +35,51 @@ const tomb = [
 const table = document.createElement('table') // table letrehozasa
 document.body.appendChild(table) //a table hozzaadasa a bodyhoz
 
-function RenderTable(){ //RenderTable fuggveny letrehozasa
-    fejlecGen()
+function RenderTable(array) { // RenderTable függvény létrehozása
+    fejlecGen() //meghivjuk a fejlecGen fuggvenyt
 
-    const tbody = document.createElement('tbody') //tbody letrehozasa
-    table.appendChild(tbody) //a tbdoyt hozzaadjuk a table-hez
+    const tbody = document.createElement('tbody') // tbody létrehozása
+    table.appendChild(tbody) // a tbody-t hozzáadjuk a table-hez
 
-    for(let i = 0; i < tomb.length; i++){ //végigmegyunk a tombon egy i vel
-        const tr = document.createElement('tr') //létrehozzuk a sort  
-        tbody.appendChild(tr) //a sort hozzácsatoljuk a tbody hoz
-    
-        const td1 = document.createElement('td') //létrehozzuk elso cellat a sorban 
-        td1.innerHTML = tomb[i].ter //az elso td szovege a tomb i. objektumanak ter tulajdonsága
-        tr.appendChild(td1) // hozzácsatoljuk a cellát a sorhoz
-    
-        const td2 = document.createElement('td') //létrehozzuk a masodik cellat a sorban 
-        td2.innerHTML = tomb[i].ido //az masodik td szovege a tomb i. objektumanak ido tulajdonsága
-        tr.appendChild(td2) // hozzácsatoljuk a cellát a sorhoz
-    
-        if(tomb[i].kepv2){ //ha van kepv2 akkor megyunk be
-            const td3 = document.createElement('td') //lletrehozzuk a harmadik cellat a sorban
-            td3.innerHTML = tomb[i].kepv //a harmadik td szovege a tomb i. objektumanak kepv tulajdonsága
-            tr.appendChild(td3) // hozzácsatoljuk a cellát a sorhoz
-    
-            const td4 = document.createElement('td') //lletrehozzuk a negyedik cellat a sorban
-            td4.innerHTML = tomb[i].kepv2 //a ngyedik td szovege a tomb i. objektumanak kepv2 tulajdonsága
-            tr.appendChild(td4) // hozzácsatoljuk a cellát a sorhoz
+    for (let i = 0; i < array.length; i++) { // végigmegyünk a tömbön egy i-vel
+        const tr = document.createElement('tr') // létrehozzuk a sort
+        tbody.appendChild(tr) // a sort hozzácsatoljuk a tbody-hoz
+
+        const aktual = array[i] //az aktualis objektumot kiveszem egsy valtozoba
+        let index = 0 //az index alap erteke 0
+        let tulajdszam = 0 //a tulajdszam azt jeloli, hogy hany tualdjsonága van az aktualis objektumnek
+
+        for (const j in aktual) { //végigmegyunk az aktualis obj tulajdonsagain
+            tulajdszam++ //minden tulajdonsagnal noveljuk egyel a tulajdszam-ot
         }
-        else{
-            const td3 = document.createElement('td') //lletrehozzuk a harmadik cellat a sorban
-            td3.colSpan = 2 //beallitjuk a colspant a cellára
-            td3.innerHTML = tomb[i].kepv //a harmadik td szovege a tomb i. objektumanak kepv tulajdonsága
-            tr.appendChild(td3) // hozzácsatoljuk a cellát a sorhoz
+
+        for (const j in aktual) { //végig megyunk az objektum tualjdonsagain
+            if (index == 0) { //ha az index 0 akkor megyunk be
+                const td1 = document.createElement('td') // létrehozzuk első cellát a sorban 
+                td1.innerHTML = aktual[j] // az első td szövege a tömb i. objektumának ter tulajdonsága
+                tr.appendChild(td1) // hozzácsatoljuk a cellát a sorhoz
+            }
+            if (index == 1) {//ha az index 1 akkor megyunk be
+                const td2 = document.createElement('td') // létrehozzuk a második cellát a sorban 
+                td2.innerHTML = aktual[j] // a második td szövege a tömb i. objektumának ido tulajdonsága
+                tr.appendChild(td2) // hozzácsatoljuk a cellát a sorhoz
+            }
+            if (index == 2) {//ha az index 2 akkor megyunk be
+                const td3 = document.createElement('td') // létrehozzuk a harmadik cellát a sorban 
+                td3.innerHTML = aktual[j] // a harmadik td szövege a tömb i. objektumának kepv tulajdonsága
+
+                if (tulajdszam === 3) { //Ha nincs 4. tulajdonság, azaz a tulajdszam = 3-al akkor megyunk be
+                    td3.setAttribute('colspan', '2') //beallitjuk a colspant a cellara
+                }
+                tr.appendChild(td3) // hozzácsatoljuk a cellát a sorhoz
+            }
+            if (index == 3) {//ha az index 3 akkor megyunk be
+                const td4 = document.createElement('td') // létrehozzuk a negyedik cellát a sorban 
+                td4.innerHTML = aktual[j] // a negyedik td szövege a tömb i. objektumának kepv2 tulajdonsága
+                tr.appendChild(td4) // hozzácsatoljuk a cellát a sorhoz
+            }
+
+            index++//az indexet novekljuk egyel
         }
     }
 }
@@ -145,7 +158,7 @@ function fejlecGen(){ //letrehozom a fejlecgeneralas fuggvenyet
         index++ //az indexet novelem 1-el
     }
 }
-RenderTable()//meghivom a RenderTable fuggvenyt
+RenderTable(tomb) //meghivom a RenderTable fuggvenyt, a tomb paramlterrel
 
 const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
 
