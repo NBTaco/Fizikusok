@@ -40,6 +40,12 @@ document.body.appendChild(table) //a table hozzaadasa a bodyhoz
 
 const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
 
+
+/**
+ * A függvény feladata az, hogy egy megadott paraméter alapján (arrray, tömb) létrehoz egy táblázatot a html-en
+ * 
+ * @param {Array} array a tömb ami alapján generáljuk a táblázatot
+ */
 function RenderTable(array) { // RenderTable függvény létrehozása
     fejlecGen() //meghivjuk a fejlecGen fuggvenyt
 
@@ -89,6 +95,14 @@ function RenderTable(array) { // RenderTable függvény létrehozása
     }
 }
 
+/**
+ * A  föggvény feladata az, hogy megnézi, hogy az első paramétenek (validelem) van e szövege, és 
+ * amennyiben nincs az error helyéhesz kíírja az errorszovege paraméternek megadott szöveget
+ * 
+ * @param {HTMLElement} validelem a validálni kívánt HTML elem
+ * @param {string} errorszovege  a szöveg, ami az error lesz
+ * @returns True, ha átmegy, False ha nem
+ */
 function validate(validelem, errorszovege){ //letrehozzuk a validate fuggvenyt
     let valid = true //a valid alapertek true
     if(validelem.value === ""){ //ha a validelem ures akkor megyunk be
@@ -103,6 +117,16 @@ function validate(validelem, errorszovege){ //letrehozzuk a validate fuggvenyt
 }
 
 
+/**
+ * A függvény feladata az, hogy össszemér két elemet (validelem1, validelem2), ha mindkettő üres akkor 
+ * mindkettőhhöz kiírja error-nak az errorszovege paraméternek megadott szöveget, viszont ha csak 
+ * az egyik üres akkor a másikhoz nem ír semmit errornak
+ * 
+ * @param {HTMLElement} validelem1 az első HTML elem
+ * @param {HTMLElement} validelem2 a másidok HTML elem
+ * @param {string} errorszovege az error szövege
+ * @returns True, ha átmegy, False ha nem
+ */
 function validate2(validelem1, validelem2, errorszovege){
     let valid = true //a valid alapertek true
     if(validelem1.value === "" && validelem2.value === ""){ // ha a validelem1 és a validelem2 is üres akkkor megyunk be
@@ -130,6 +154,10 @@ function validate2(validelem1, validelem2, errorszovege){
     return valid //a valid ertekevel treunk vissza
 }
 
+
+/**
+ * A függvény, egy függvéynen belüli objektum alapján létrehozza a táblázat fejlécét
+ */
 function fejlecGen(){ //letrehozom a fejlecgeneralas fuggvenyet
     const fejlec = { //a fejlec objektuma
         ter: "Fizika területe",  //az objektum ter tulajdonsága
@@ -166,6 +194,10 @@ function fejlecGen(){ //letrehozom a fejlecgeneralas fuggvenyet
 
 RenderTable(tomb) //meghivom a RenderTable fuggvenyt, a tomb paramlterrel
 
+
+/**
+ * A függvény egy a függvényen belüli tömb alapján létrehoz egy formot a HTML-en
+ */
 function formGen(){ //letrehozzuk a formgeneralas fuggvenyt
     const formtomb = [ //letrehozzuk a formtombot, ami alapjan generalodik a form
         {
