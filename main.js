@@ -32,8 +32,13 @@ const tomb = [
         kepv2: "Stephen Hawking" //a negyedik objektum kepv2 tulajdonsága
     }
 ]
+
+formGen() //meghivom a formGen fuggvenyt
+
 const table = document.createElement('table') // table letrehozasa
 document.body.appendChild(table) //a table hozzaadasa a bodyhoz
+
+const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
 
 function RenderTable(array) { // RenderTable függvény létrehozása
     fejlecGen() //meghivjuk a fejlecGen fuggvenyt
@@ -158,9 +163,69 @@ function fejlecGen(){ //letrehozom a fejlecgeneralas fuggvenyet
         index++ //az indexet novelem 1-el
     }
 }
+
 RenderTable(tomb) //meghivom a RenderTable fuggvenyt, a tomb paramlterrel
 
-const form = document.getElementById('form') //a formot kivesszuk egy valtozoba
+function formGen(){ //letrehozzuk a formgeneralas fuggvenyt
+    const formtomb = [ //letrehozzuk a formtombot, ami alapjan generalodik a form
+        {
+            id: "fizika", //a formtomb elso objektumanak id tulajdonsága "fizika"
+            label: "Terület megnevezése:" //a formtomb elso objektumanak label tulajdonsága "Terület megnevezése"
+        },
+        {
+            id: "ido", //a formtomb masodik objektumanak id tulajdonsága "ido"
+            label: "Időszak:" //a formtomb masodik objektumanak label tulajdonsága "Időszak"
+        },
+        {
+            id: "tudos1", //a formtomb haramdik objektumanak id tulajdonsága "tudos1"
+            label: "Első tudós:" //a formtomb haramdik objektumanak label tulajdonsága "Első tudós"
+        },
+        {
+            id: "tudos2", //a formtomb negyedik objektumanak id tulajdonsága "tudos2"
+            label: "Második tudós:" //a formtomb negyedik objektumanak label tulajdonsága "Második tudós"
+        }
+    ]
+
+    const form = document.createElement('form') //letrehozzuk a formot
+    form.id = "form" //a form id ja form
+    form.action = "#" //a form actionje #
+    document.body.appendChild(form) //a formot hozzáadjuk a bodyhoz
+
+    for(let i = 0; i < formtomb.length; i++){ //vegigmegyunk a formtomb-on 
+        const div = document.createElement('div') //letrehoznk egy divet
+        form.appendChild(div) //a divez hozzáadjuk a formhoz
+
+        const label = document.createElement('label') //letrehozunk egy labelt
+        label.innerHTML = formtomb[i].label //a label szovege a label tulajdonság az i. objektumbol
+        div.appendChild(label) ///a divhez hozzáadjuk a labelt
+
+        const br = document.createElement('br') //létrehozunk egy br-t 
+        div.appendChild(br) //a brt hozzáadjuk a divhez
+
+        const input = document.createElement('input') //létrehozunk egy input mezőt
+        div.appendChild(input)  //a inputot hozzáadjuk a divhez
+        input.type = "text" //az input type "text"
+        input.id = formtomb[i].id //az input idja az id tulajdonság az i. objektumbol
+        input.name = formtomb[i].id //az input nameje az id tulajdonság az i. objektumbol
+
+        const br2 = document.createElement('br') //létrehpzunk megegy brt
+        div.appendChild(br2) //a brt hozzáadjuk a divhez
+
+        const span = document.createElement('span') //létrehozunk egy spant az errornak
+        div.appendChild(span) //a divhez hozzáadjkuk a spant
+        span.className = "error" //a span class = error
+        
+        const br3 = document.createElement('br') //létrehozunk mégegy br-t
+        div.appendChild(br3) //a brt hozzáadjuk a divhez
+    }
+
+    const button = document.createElement('button')
+    button.innerHTML = "Hozzáadás"
+    form.appendChild(button)
+
+}
+
+
 
 form.addEventListener('submit', function(e){ //a form submit eseményére teszek egy eseménykezelőt
     e.preventDefault() //meggatolom az alapveto mukodeset
@@ -203,7 +268,15 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
             }
             tomb.push(uj) //a tombbe berakom az uj objektumot
         }
-        else{ 
+        else if(kepv2V == ""){
+            const uj =  { //létrehozok egy uj objektumot
+                ter: terV, //a ter tulajdonsag erteke terV
+                ido: idoV, //a ido tulajdonsag erteke idoV
+                kepv: kepvV, //a kepv tulajdonsag erteke kepvV
+            }
+            tomb.push(uj) //a tombbe berakom az uj objektumot
+        }
+        else{
         const uj =  { //létrehozok egy uj objektumot
                 ter: terV, //a ter tulajdonsag erteke terV
                 ido: idoV, //a ido tulajdonsag erteke idoV
@@ -214,5 +287,5 @@ form.addEventListener('submit', function(e){ //a form submit eseményére teszek
     }
     }
     table.innerHTML = "" //a table-t clearelem
-    RenderTable() //meghivom a RenderTable függvényt
+    RenderTable(tomb) //meghivom a RenderTable függvényt
 })
